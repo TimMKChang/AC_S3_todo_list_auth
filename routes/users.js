@@ -16,7 +16,33 @@ router.get('/register', (req, res) => {
 })
 // register check
 router.post('/register', (req, res) => {
-  return res.send('register')
+  const { name, email, password, password2 } = req.body
+  User.findOne({ email })
+    .then(user => {
+      if (user) {
+        console.log('User already exists.')
+        res.render('register', {
+          name,
+          email,
+          password,
+          password2
+        })
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        })
+        newUser
+          .save()
+          .then(user => {
+            return res.redirect('/')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
 })
 // logout
 router.get('/logout', (req, res) => {
