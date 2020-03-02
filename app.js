@@ -4,6 +4,7 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const session = require('express-session')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -24,6 +25,11 @@ db.once('open', () => {
   console.log('mongodb connected')
 })
 
+app.use(session({
+  secret: 'secert for todo list',
+  resave: false,
+  saveUninitialized: true
+}))
 
 // require routes
 app.use('/', require('./routes/home'))
