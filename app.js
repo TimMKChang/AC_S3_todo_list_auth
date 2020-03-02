@@ -28,6 +28,7 @@ db.once('open', () => {
 // require routes
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todos'))
+app.use('/users', require('./routes/users'))
 
 app.listen(port, () => {
   console.log(`App is running on localhost:${port}`)
