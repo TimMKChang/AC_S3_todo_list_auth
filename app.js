@@ -42,6 +42,9 @@ app.use((req, res, next) => {
   next()
 })
 
+const { authenticated } = require('./config/auth')
+app.all('*', authenticated)
+
 // require routes
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todos'))
