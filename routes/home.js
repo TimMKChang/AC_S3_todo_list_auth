@@ -4,7 +4,7 @@ const Todo = require('../models/todo')
 
 // homepage
 router.get('/', (req, res) => {
-  Todo.find()
+  Todo.find({ userId: req.user._id })
     .sort({ name: 'asc' })
     .lean()
     .then(todos => {

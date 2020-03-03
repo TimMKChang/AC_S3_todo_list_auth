@@ -12,7 +12,7 @@ router.get('/new', (req, res) => {
 })
 // get one todo
 router.get('/:id', (req, res) => {
-  Todo.findById(req.params.id)
+  Todo.findOne({ _id: req.params.id, userId: req.user._id })
     .lean()
     .then(todo => {
       return res.render('detail', { todo })
@@ -24,7 +24,8 @@ router.get('/:id', (req, res) => {
 // create todo
 router.post('/', (req, res) => {
   const todo = new Todo({
-    name: req.body.name
+    name: req.body.name,
+    userId: req.user._id
   })
   todo.save(err => {
     if (err) {
@@ -35,7 +36,7 @@ router.post('/', (req, res) => {
 })
 // update todo page
 router.get('/:id/edit', (req, res) => {
-  Todo.findById(req.params.id)
+  Todo.findOne({ _id: req.params.id, userId: req.user._id })
     .lean()
     .then(todo => {
       return res.render('edit', { todo })
@@ -46,7 +47,7 @@ router.get('/:id/edit', (req, res) => {
 })
 // update todo
 router.put('/:id', (req, res) => {
-  Todo.findById(req.params.id)
+  Todo.findOne({ _id: req.params.id, userId: req.user._id })
     .then(todo => {
       todo.name = req.body.name
 
@@ -69,7 +70,7 @@ router.put('/:id', (req, res) => {
 })
 // delete todo
 router.delete('/:id', (req, res) => {
-  Todo.findById(req.params.id)
+  Todo.findOne({ _id: req.params.id, userId: req.user._id })
     .then(todo => {
       todo.remove(err => {
         if (err) {
