@@ -14,48 +14,6 @@ router.get('/', (req, res) => {
       .lean()
       .then(todos => {
 
-        // todos.forEach(todo => {
-        //   User.findById(todo.userId)
-        //     .lean()
-        //     .then(user => {
-        //       if (user) {
-        //         todo.userEmail = user.email
-        //         console.log(todo)
-        //       }
-        //     })
-        //     .catch(err => {
-        //       return console.error(err)
-        //     })
-        // })
-        // console.log(todos)
-        // return res.render('index', { todos })
-
-        // -------------------------------------
-        // function getUser(todos) {
-        //   return new Promise((resolve, reject) => {
-        //     if (todos) {
-
-        //       todos.forEach(todo => {
-        //         User.findById(todo.userId)
-        //           .lean()
-        //           .then(user => {
-        //             if (user) {
-        //               todo.userEmail = user.email
-        //               console.log(todo)
-        //             }
-        //           })
-        //           .catch(err => {
-        //             return console.error(err)
-        //           })
-        //       })
-
-        //       resolve(todos)
-        //     } else {
-        //       reject("Failed")
-        //     }
-        //   })
-        // }
-
         async function main(todos) {
 
           for (const todo of todos) {
@@ -64,7 +22,6 @@ router.get('/', (req, res) => {
               .then(user => {
                 if (user) {
                   todo.userEmail = user.email
-                  // console.log(todo)
                 }
               })
               .catch(err => {
@@ -72,7 +29,6 @@ router.get('/', (req, res) => {
               })
           }
 
-          // console.log(todos)
           return res.render('index', { todos })
         }
         main(todos)
