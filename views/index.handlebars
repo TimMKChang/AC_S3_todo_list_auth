@@ -12,6 +12,10 @@
       </div>
 
       <div class="col-auto">
+        {{#if this.userEmail}}
+        <button type="button" class="btn btn-info" disabled>Created by: <span class="d-inline-block text-left"
+            style="width: 200px;">{{this.userEmail}}</span></button>
+        {{/if}}
         <a href="/todos/{{this._id}}" class="btn btn-secondary">detail</a>
         <a href="/todos/{{this._id}}/edit" class="btn btn-success">edit</a>
         <form action="/todos/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
