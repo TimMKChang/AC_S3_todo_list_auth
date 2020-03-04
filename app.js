@@ -7,6 +7,10 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -50,6 +54,7 @@ app.all('*', authenticated)
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todos'))
 app.use('/users', require('./routes/users'))
+app.use('/auth', require('./routes/auths'))
 
 app.listen(port, () => {
   console.log(`App is running on localhost:${port}`)

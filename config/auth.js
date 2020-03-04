@@ -1,7 +1,7 @@
 module.exports = {
   authenticated: (req, res, next) => {
     // authenticate all routes except '/users/*'
-    const regex = RegExp('/users');
+    const regex = RegExp('/users|/auth');
     if (regex.test(req.originalUrl)) {
       return next()
     }
