@@ -22,11 +22,35 @@ router.get('/register', (req, res) => {
 // register check
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body
+
+  let errors = []
+
+  if (!name || !email || !password || !password2) {
+    errors.push({ message: 'All fields are required!' })
+  }
+
+  if (password && password2 && password !== password2) {
+    errors.push({ message: 'Inconsistent Passwords!' })
+  }
+
+  if (errors.length > 0) {
+    return res.render('register', {
+      errors,
+      name,
+      email,
+      password,
+      password2
+    })
+  }
+
   User.findOne({ email: email })
     .then(user => {
       if (user) {
-        console.log('User already exists.')
+
+        errors.push({ message: 'The email address is already registered!' })
+
         res.render('register', {
+          errors,
           name,
           email,
           password,
@@ -63,6 +87,7 @@ router.post('/register', (req, res) => {
 // logout
 router.get('/logout', (req, res) => {
   req.logOut()
+  req.flash('success_msg', 'You have been successfully logged out!')
   return res.redirect('/users/login')
 })
 
